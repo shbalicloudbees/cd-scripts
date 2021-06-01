@@ -1,0 +1,14 @@
+---
+- hosts: localhost
+  tasks:
+
+
+    - name: Login server 
+      shell:  ectool --server cd.shbali.pscbdemos.com login admin changeme  
+      register: result 
+    - debug: msg="{{ result.stdout }}"
+
+    - name: Check Directory Procedure 
+      shell:  ectool evalDsl --dslFile ./Groovy/getPluginConfig.groovy
+      register: result 
+    - debug: msg="{{ result.stdout }}"

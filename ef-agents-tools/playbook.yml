@@ -1,0 +1,7 @@
+---
+- hosts: localhost
+  tasks:
+    - name: site | Check ectool 
+      shell:  ectool --version 
+      register: version 
+    - debug: msg="{{ version.stdout }}"

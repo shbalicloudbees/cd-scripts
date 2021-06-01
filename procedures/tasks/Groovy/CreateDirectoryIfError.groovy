@@ -1,0 +1,46 @@
+procedure 'CreateDirectoryIfError', {
+  description = ''
+  jobNameTemplate = ''
+  projectName = 'Default'
+  resourceName = ''
+  timeLimit = ''
+  timeLimitUnits = 'minutes'
+  workspaceName = ''
+
+  step 'DirectoryExistsOrNot', {
+    description = ''
+    alwaysRun = '0'
+    broadcast = '0'
+    condition = ''
+    errorHandling = 'ignore'
+    exclusiveMode = 'none'
+    parallel = '0'
+    precondition = ''
+    releaseMode = 'none'
+    resourceName = 'local'
+    subprocedure = 'EncapsulateFileOpsPlugin'
+    subproject = ''
+    timeLimit = ''
+    timeLimitUnits = 'minutes'
+    workspaceName = ''
+  }
+
+  step 'CreateDirectory', {
+    description = ''
+    alwaysRun = '0'
+    broadcast = '0'
+    condition = '$[/javascript (getProperty(\'/myJob/jobSteps[DirectoryExistsOrNot]/outputParameters/result\')==\'error\');]'
+    errorHandling = 'failProcedure'
+    exclusiveMode = 'none'
+    parallel = '0'
+    precondition = ''
+    releaseMode = 'none'
+    resourceName = 'local'
+    subprocedure = 'CreateDirectory'
+    subproject = '/plugins/EC-FileOps/project'
+    timeLimit = ''
+    timeLimitUnits = 'minutes'
+    workspaceName = ''
+    actualParameter 'Path', '/tmp/dir'
+  }
+}

@@ -1,0 +1,20 @@
+---
+- hosts: localhost
+  #vars_files: ../vars/ectools.yml
+  tasks:
+   # - include_vars: ectools.yml
+
+    - name: Login server 
+      shell:  ectool --server cd.shbali.pscbdemos.com login admin changeme  
+      register: result 
+    - debug: msg="{{ result.stdout }}"
+
+    - name: Check Directory Procedure 
+      shell:  ectool evalDsl --dslFile ./Groovy/EncapsulateFileOpsPlugin.groovy
+      register: result 
+    - debug: msg="{{ result.stdout }}"
+
+    - name: Create Directory Procedure 
+      shell:  ectool evalDsl --dslFile ./Groovy/CreateDirectoryIfError.groovy
+      register: result 
+    - debug: msg="{{ result.stdout }}"
